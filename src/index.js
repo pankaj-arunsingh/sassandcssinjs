@@ -1,14 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import styled, { ThemeProvider } from "styled-components";
+const theme = {
+  font: "sans-serif",
+  primary: "#333",
+  secondary: "#999",
+};
+const GlobalStyles = styled.div`
+  font-family: ${(props) => props.theme.font};
+  color: ${(props) => props.theme.primary};
+`;
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <GlobalStyles>
+        <App />
+      </GlobalStyles>
+    </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
