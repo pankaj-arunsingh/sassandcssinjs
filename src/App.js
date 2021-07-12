@@ -1,14 +1,18 @@
-import StyledSocialCard from "./components/StyledCards";
-import SassSocialCard from "./components/SassCard";
-import { Link, Route } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-function App() {
-  const LinkContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  `;
+import { useErrorBoundary } from "use-error-boundary";
+import ErrorComponent from "./components/ErrorComponent";
+const StyledSocialCard = lazy(() => import("./components/StyledCards"));
+const SassSocialCard = lazy(() => import("./components/SassCard"));
+const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const App = () => {
   const style = { padding: "10px" };
+  const { ErrorBoundary, didCatch, error, reset } = useErrorBoundary();
   return (
     <>
       <LinkContainer>
@@ -19,15 +23,24 @@ function App() {
           Sass example card
         </Link>
       </LinkContainer>
-
-      <Route path="/sassCard">
-        <SassSocialCard />
-      </Route>
-      <Route path="/styledCard">
-        <StyledSocialCard />
-      </Route>
+      <ErrorBoundary
+        render={() => (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route path="/sassCard">
+                <SassSocialCard />
+              </Route>
+              <Route path="/styledCard">
+                <StyledSocialCard />
+              </Route>
+            </Switch>
+          </Suspense>
+        )}
+        renderError={({ error }) => <ErrorComponent error={error} />}
+        reset={() => reset}
+      />
     </>
   );
-}
+};
 
 export default App;
