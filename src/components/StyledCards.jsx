@@ -55,20 +55,23 @@ p{
     }
 }
 `
+
 const StyledSocialCard=()=>
     <Card>
-        <img src={Image} alt='Sample' />
+        <img src={Image} alt='Sample' className="for-e2e"/>
         <div>
             <div>
-                <p>@Some_pankaj_guy
+                <p>@css_in_js_pankaj
                 <br/>
                 <span>Jul 8</span>
                 </p>
                 <img src={User} alt='@some_lego_guy' />
+                
             </div>
             <p>Here is a custom status with some text and stuff...</p>
             <SocialSharing>
         <p>
+           
           <img src={Share} alt='Shares' /> 492
         </p>
         <p>
